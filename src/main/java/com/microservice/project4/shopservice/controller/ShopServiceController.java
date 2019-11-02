@@ -14,6 +14,13 @@ public class ShopServiceController {
 	@Autowired
     ShopServiceDelegate shopServiceDelegate;
  
+	//The annotation of RequestMapping can map HTTP request 
+    //"http://host:port/" to this method
+    @RequestMapping("/")
+    public String home() {
+        return "Welcome to shop service";
+    }
+    
     @RequestMapping(value = "/getShopDetails/{shopName}", method = RequestMethod.GET)
     public String getInventory(@PathVariable String shopName) {
     	
