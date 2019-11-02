@@ -8,4 +8,4 @@ FROM gcr.io/distroless/java
 ENV VERSION 0.0.1
 COPY --from=build /usr/app/target/shop-service-$VERSION.jar /usr/app
 EXPOSE 7500  
-ENTRYPOINT ["java","-jar","/usr/app/shop-service-$VERSION.jar"]
+ENTRYPOINT ["java","-jar","/usr/app/shop-service-0.0.1.jar"]
