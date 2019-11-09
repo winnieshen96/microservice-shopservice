@@ -9,3 +9,5 @@ ENV VERSION 0.0.1
 COPY --from=build /usr/app/target/shop-service-$VERSION.jar /usr/app/shop-service-$VERSION.jar
 EXPOSE 7500  
 ENTRYPOINT ["java","-jar","/usr/app/shop-service-0.0.1.jar"]
+
+HEALTHCHECK --interval=1m --timeout=3s CMD wget --quiet --tries=1 --spider http://localhost:7500 || exit 1
