@@ -17,7 +17,7 @@ public class ShopServiceDelegate {
      
     public String callInventoryServiceAndGetData(String shopName) {
     	
-        System.out.println("Consul Demo - Getting shop details for " + shopName);
+        System.out.println("Getting shop details for " + shopName);
  
         String response = restTemplate.exchange("http://inventory-service/getInventoryForShop/{shopName}",
         		HttpMethod.GET, null, new ParameterizedTypeReference<String>() {},
