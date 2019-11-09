@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,9 +20,10 @@ public class ShopServiceDelegate {
     	
         System.out.println("Getting shop details for " + shopName);
  
-        String response = restTemplate.exchange("http://inventory-service:6500/getInventoryForShop/{shopName}",
-        		HttpMethod.GET, null, new ParameterizedTypeReference<String>() {},
-        		shopName.toLowerCase()).getBody();
+	String resourceUrl = "http://inventory-service:6500/getInventoryForShop/" + shopName;
+	ResponseEntity<String> response
+				= restTemplate.getForEntity(resourceUrl, String.class);
+        
          
         System.out.println("Response Received as " + response + " -  " + new Date());
  
