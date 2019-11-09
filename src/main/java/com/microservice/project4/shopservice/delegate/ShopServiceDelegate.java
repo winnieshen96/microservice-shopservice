@@ -19,7 +19,7 @@ public class ShopServiceDelegate {
     	
         System.out.println("Getting shop details for " + shopName);
  
-        String response = restTemplate.exchange("http://inventory-service/getInventoryForShop/{shopName}",
+        String response = restTemplate.exchange("http://inventory-service:6500/getInventoryForShop/{shopName}",
         		HttpMethod.GET, null, new ParameterizedTypeReference<String>() {},
         		shopName.toLowerCase()).getBody();
          
