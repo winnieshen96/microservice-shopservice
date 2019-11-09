@@ -4,11 +4,11 @@ metadata:
   labels:
     name: shop-service
   name: shop-service
-  namespace: microservice
+  namespace: dev
 spec:
   selector:
     app: microservice-demo
-    name: shopService
+    name: shop-service
   ports:
   - protocol: TCP
     port: 7500
