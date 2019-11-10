@@ -63,6 +63,6 @@ stages:
               kubernetesServiceConnection: 'dev-myAKSCluster-dev-1573231993640'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
-
+                $(Pipeline.Workspace)/manifests/service.yml
               containers: $(containerRegistry)/$(imageRepository):$(tag)
               imagePullSecrets: $(imagePullSecret)
