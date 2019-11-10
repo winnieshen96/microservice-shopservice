@@ -9,19 +9,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.microservice.project4.shopservice.client.InventoryClient;
+
 @Service
 public class ShopServiceDelegate {
 
 	@Autowired
     RestTemplate restTemplate;
+	@Autowired
+	InventoryClient inventoryClient;
      
     public String callInventoryServiceAndGetData(String shopName) {
     	
         System.out.println("Getting shop details for " + shopName);
  
-        String response = restTemplate.exchange("http://inventory-service/getInventoryForShop/{shopName}",
-        		HttpMethod.GET, null, new ParameterizedTypeReference<String>() {},
-        		shopName.toLowerCase()).getBody();
+        String response = inventoryClient.getInventory(shopName).toString();
          
         System.out.println("Response Received as " + response + " -  " + new Date());
  
