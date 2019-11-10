@@ -12,7 +12,7 @@ variables:
   tag: 'v1'
   containerRegistry: 'dba3f8f5d0df4cb492652988af71367c.azurecr.io'
   imageRepository: 'demo/shop-service'
-  imagePullSecret: 'regcred'
+  imagePullSecret: 'regcred-shop'
 
 stages:
 - stage: Build
