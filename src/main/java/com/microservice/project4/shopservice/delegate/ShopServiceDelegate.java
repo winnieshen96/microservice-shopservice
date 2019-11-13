@@ -3,9 +3,6 @@ package com.microservice.project4.shopservice.delegate;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,8 +27,4 @@ public class ShopServiceDelegate {
         return "Shop Name -  " + shopName + " :::  Inventory Details " + response + " -  " + new Date();
     }
      
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }
