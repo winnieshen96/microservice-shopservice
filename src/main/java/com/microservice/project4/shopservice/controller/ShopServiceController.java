@@ -16,7 +16,7 @@ public class ShopServiceController {
 	@Autowired
 	InventoryClient inventoryClient;
 	
-	//The annotation of RequestMapping can map HTTP request 
+    //The annotation of RequestMapping can map HTTP request 
     //"http://host:port/" to this method
     @RequestMapping("/")
     public String home() {
