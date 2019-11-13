@@ -62,6 +62,7 @@ stages:
               action: 'deploy'
               kubernetesServiceConnection: 'dev-myAKSCluster-dev-1573614110824'
               manifests: |
+                $(Pipeline.Workspace)/manifests/serviceAccount.yml
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
                 $(Pipeline.Workspace)/manifests/ingress.yml
