@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'v1'
+  tag: $(Build.BuildId)
   containerRegistry: 'dba3f8f5d0df4cb492652988af71367c.azurecr.io'
   imageRepository: 'demo/shop-service'
   imagePullSecret: 'regcred-shop'
