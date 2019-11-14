@@ -65,7 +65,7 @@ stages:
                 $(Pipeline.Workspace)/manifests/serviceAccount.yml
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
-                $(Pipeline.Workspace)/manifests/ingress.yml
                 $(Pipeline.Workspace)/manifests/role.yml
+                $(Pipeline.Workspace)/manifests/roleBinding.yml
               containers: $(containerRegistry)/$(imageRepository):$(tag)
               imagePullSecrets: $(imagePullSecret)
