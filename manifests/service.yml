@@ -6,7 +6,7 @@ metadata:
   name: shop-service
   namespace: dev
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: microservice-demo
     name: shop-service
