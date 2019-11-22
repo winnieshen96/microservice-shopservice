@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:7500/getShopDetails/fruitShop",
+			"name": "shop-inventory-integration-test",
 			"event": [
 				{
 					"listen": "test",
@@ -25,18 +25,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7500/getShopDetails/fruitShop",
+					"raw": "http://{{externalIP}}/getShopDetails/fruitShop",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{externalIP}}"
 					],
-					"port": "7500",
 					"path": [
 						"getShopDetails",
 						"fruitShop"
 					]
-				},
-				"description": "test whether the status code is 200"
+				}
 			},
 			"response": []
 		}
