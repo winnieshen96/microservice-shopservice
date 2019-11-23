@@ -110,8 +110,8 @@ stages:
         writeBOM: true
         actionOnMissing: 'warn'
         keepToken: false
-        tokenPrefix: '#{'
-        tokenSuffix: '}#'
+        tokenPrefix: '"#{'
+        tokenSuffix: '}#"'
     - task: CmdLine@2
       displayName: Run API Tests
       inputs:
