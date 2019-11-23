@@ -69,3 +69,16 @@ stages:
                 $(Pipeline.Workspace)/manifests/roleBinding.yml
               containers: $(containerRegistry)/$(imageRepository):$(tag)
               imagePullSecrets: $(imagePullSecret)
+
+          - task: Kubernetes@1
+            name: get
+            displayName: 'Get services in the new namespace'
+            continueOnError: true
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'dev-myAKSCluster-dev-1573614110824'
+              namespace: 'dev'
+              command: 'get'
+              arguments: 'svc --selector=name=shop-service'
+              outputFormat: 'jsonpath=''http://{.items[*].status.loadBalancer.ingress[0].ip}:{.items[*].spec.ports[0].port}'''
+          
