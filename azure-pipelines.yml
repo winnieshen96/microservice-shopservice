@@ -89,7 +89,6 @@ stages:
       exteralIP: $[ dependencies.Deploy.outputs['get.KubectlOutput'] ]
     pool:
       vmImage: 'ubuntu-latest'
-    environment: 'dev.dev'
     steps:
     - task: CmdLine@2
       displayName: Install newman
