@@ -90,6 +90,9 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: CmdLine@2
+      inputs:
+        script: 'echo $(externalIP)'
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
