@@ -108,8 +108,7 @@ stages:
         targetFiles: '**/devEnv.postman_environment.json'
         encoding: 'auto'
         writeBOM: true
-        escapeType: 'custom'
-        charsToEscape: ''''
+        escapeType: 'json'
         actionOnMissing: 'warn'
         keepToken: false
         tokenPrefix: '#{'
