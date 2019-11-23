@@ -86,7 +86,7 @@ stages:
     dependsOn: Deploy
     displayName: Integration Test
     variables:
-      externalIP: "$[ dependencies.Deploy.outputs['Deploy.get.KubectlOutput'] ]"
+      externalIP: $[ dependencies.Deploy.outputs['Deploy.get.KubectlOutput'] ]
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -108,10 +108,12 @@ stages:
         targetFiles: '**/devEnv.postman_environment.json'
         encoding: 'auto'
         writeBOM: true
+        escapeType: 'custom'
+        charsToEscape: ''''
         actionOnMissing: 'warn'
         keepToken: false
-        tokenPrefix: '"#{'
-        tokenSuffix: '}#"'
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
     - task: CmdLine@2
       displayName: Run API Tests
       inputs:
