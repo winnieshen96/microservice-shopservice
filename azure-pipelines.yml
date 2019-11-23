@@ -81,14 +81,40 @@ stages:
               command: 'get'
               arguments: 'svc --selector=name=shop-service'
               outputFormat: 'jsonpath=''http://{.items[*].status.loadBalancer.ingress[0].ip}:{.items[*].spec.ports[0].port}'''
-          
-          - task: replacetokens@3
-            inputs:
-              rootDirectory: '$(Pipeline.Workspace)/manifests/'
-              targetFiles: '**/devEnv.postman_environment.json'
-              encoding: 'auto'
-              writeBOM: true
-              actionOnMissing: 'warn'
-              keepToken: false
-              tokenPrefix: '#{'
-              tokenSuffix: '}#'
+
+  - job:
+    dependsOn: Deploy
+    displayName: Integration Test
+    variables:
+      exteralIP: $[ dependencies.Deploy.outputs['get.KubectlOutput'] ]
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'dev.dev'
+    steps:
+    - task: CmdLine@2
+      displayName: Install newman
+      inputs:
+        script: 'npm install -g newman'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - task: replacetokens@3
+      inputs:
+        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        targetFiles: '**/devEnv.postman_environment.json'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+    - task: CmdLine@2
+      displayName: Run API Tests
+      inputs:
+        script: 'newman run shop-service-test.postman_collection.json -e devEnv.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
+        workingDirectory: '$(Pipeline.Workspace)/manifests/'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '$(Pipeline.Workspace)/manifests/Results/junitReport.xml'
+        searchFolder: '$(Pipeline.Workspace)/manifests/'
+        testRunTitle: 'Integration Test'
+    
