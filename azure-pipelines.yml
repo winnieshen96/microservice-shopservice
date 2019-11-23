@@ -79,6 +79,6 @@ stages:
               kubernetesServiceEndpoint: 'dev-myAKSCluster-dev-1573614110824'
               namespace: 'dev'
               command: 'get'
-              arguments: 'svc'
-              outputFormat: 'jsonpath=''http://{.items[0].status.loadBalancer.ingress[0].ip}:{.items[0].spec.ports[0].port}'''
+              arguments: 'svc --selector=name=shop-service'
+              outputFormat: 'jsonpath=''http://{.items[*].status.loadBalancer.ingress[0].ip}:{.items[*].spec.ports[0].port}'''
           
