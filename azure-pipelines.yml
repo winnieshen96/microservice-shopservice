@@ -93,7 +93,7 @@ stages:
     - task: CmdLine@2
       displayName: Install newman
       inputs:
-        script: 'npm install -g newman'
+        script: 'sudo npm install -g newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: replacetokens@3
       inputs:
