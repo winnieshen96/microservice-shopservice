@@ -82,3 +82,13 @@ stages:
               arguments: 'svc --selector=name=shop-service'
               outputFormat: 'jsonpath=''http://{.items[*].status.loadBalancer.ingress[0].ip}:{.items[*].spec.ports[0].port}'''
           
+          - task: replacetokens@3
+            inputs:
+              rootDirectory: '$(Pipeline.Workspace)/manifests/'
+              targetFiles: '**/devEnv.postman_environment.json'
+              encoding: 'auto'
+              writeBOM: true
+              actionOnMissing: 'warn'
+              keepToken: false
+              tokenPrefix: '#{'
+              tokenSuffix: '}#'
