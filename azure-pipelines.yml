@@ -87,7 +87,7 @@ stages:
     displayName: Integration Test
     variables:
       externalIPraw: $[dependencies.Deploy.outputs['Deploy.get.KubectlOutput']]
-      externalIP: '$(externalIPraw)'
+      externalIP: $(externalIPraw)
     pool:
       vmImage: 'ubuntu-latest'
     steps:
