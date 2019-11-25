@@ -109,6 +109,7 @@ stages:
         encoding: 'auto'
         writeBOM: true
         escapeType: 'json'
+        verbosity: 'detailed'
         actionOnMissing: 'warn'
         keepToken: false
         tokenPrefix: '#{'
