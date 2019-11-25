@@ -86,11 +86,12 @@ stages:
     dependsOn: Deploy
     displayName: Integration Test
     variables:
-      externalIPraw: $[dependencies.Deploy.outputs['Deploy.get.KubectlOutput']]
-      externalIP: $(externalIPraw)
+      externalIP: $[dependencies.Deploy.outputs['Deploy.get.KubectlOutput']]
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - bash: 'echo "##vso[task.setvariable variable=externalIP;]${EXTERNALIP//\''}"'
+      displayName: 'remove single quotes'
     - task: CmdLine@2
       inputs:
         script: 'echo $(externalIP)'
