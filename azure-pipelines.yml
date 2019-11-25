@@ -120,7 +120,7 @@ stages:
     - task: CmdLine@2
       displayName: Run API Tests
       inputs:
-        script: 'newman run shop-service-test.postman_collection.json -e devEnv.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
+        script: 'newman run shop-service-test.postman_collection.json -e devEnv.postman_environment.json --reporters cli,junit --reporter-junit-export Results/junitReport.xml'
         workingDirectory: '$(Pipeline.Workspace)/manifests/'
     - task: PublishTestResults@2
       inputs:
