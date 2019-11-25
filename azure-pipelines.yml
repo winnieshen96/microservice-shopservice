@@ -86,7 +86,8 @@ stages:
     dependsOn: Deploy
     displayName: Integration Test
     variables:
-      externalIP: $[ dependencies.Deploy.outputs['Deploy.get.KubectlOutput'] ]
+      externalIPraw: $[dependencies.Deploy.outputs['Deploy.get.KubectlOutput']]
+      externalIP: '$(externalIPraw)'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -102,10 +103,19 @@ stages:
       inputs:
         script: 'sudo npm install -g newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: CmdLine@2
-      displayName: Replace url
+    - task: replacetokens@3
       inputs:
-        script: 'sed ''s/#\{externalIP\}#/$(externalIP)/g'' $(Pipeline.Workspace)/manifests/devEnv.postman_environment.json'
+        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        targetFiles: '**/devEnv.postman_environment.json'
+        encoding: 'utf-8'
+        writeBOM: true
+        escapeType: 'json'
+        verbosity: 'detailed'
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+
     - task: CmdLine@2
       displayName: Run API Tests
       inputs:
