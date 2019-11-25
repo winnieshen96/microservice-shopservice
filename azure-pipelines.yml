@@ -106,7 +106,7 @@ stages:
       inputs:
         rootDirectory: '$(Pipeline.Workspace)/manifests/'
         targetFiles: '**/devEnv.postman_environment.json'
-        encoding: 'auto'
+        encoding: 'utf-8'
         writeBOM: true
         escapeType: 'json'
         verbosity: 'detailed'
