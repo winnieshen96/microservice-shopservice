@@ -102,18 +102,10 @@ stages:
       inputs:
         script: 'sudo npm install -g newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: replacetokens@3
+    - task: CmdLine@2
+      displayName: Replace url
       inputs:
-        rootDirectory: '$(Pipeline.Workspace)/manifests/'
-        targetFiles: '**/devEnv.postman_environment.json'
-        encoding: 'utf-8'
-        writeBOM: true
-        escapeType: 'json'
-        verbosity: 'detailed'
-        actionOnMissing: 'warn'
-        keepToken: false
-        tokenPrefix: '#{'
-        tokenSuffix: '}#'
+        script: 'sed ''s/#\{externalIP\}#/$(externalIP)/g'' $(Pipeline.Workspace)/manifests/devEnv.postman_environment.json'
     - task: CmdLine@2
       displayName: Run API Tests
       inputs:
