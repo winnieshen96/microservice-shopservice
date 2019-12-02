@@ -90,13 +90,8 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - bash: 'echo "##vso[task.setvariable variable=externalIP;]${EXTERNALIP//\''}"'
-      displayName: 'remove single quotes'
     - bash: 'echo "##vso[task.setvariable variable=externalIP;]${EXTERNALIP//\,}"'
       displayName: 'remove comma'
-    - task: CmdLine@2
-      inputs:
-        script: 'echo $(externalIP)'
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
