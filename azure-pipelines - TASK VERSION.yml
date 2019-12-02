@@ -1,0 +1,89 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: $(Build.BuildId)
+  containerRegistry: 'dba3f8f5d0df4cb492652988af71367c.azurecr.io'
+  imageRepository: 'demo/shop-service'
+  imagePullSecret: 'regcred-shop'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'dev.dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          
+
+  - job:
+    dependsOn: Deploy
+    displayName: Integration Test
+    variables:
+      externalIP: $[dependencies.Deploy.outputs['Deploy.get.KubectlOutput']]
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: 'echo "##vso[task.setvariable variable=externalIP;]${EXTERNALIP//\''}"'
+      displayName: 'remove single quotes'
+    - bash: 'echo "##vso[task.setvariable variable=externalIP;]${EXTERNALIP//\,}"'
+      displayName: 'remove comma'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        targetPath: '$(Pipeline.Workspace)'
+    - task: CmdLine@2
+      displayName: Install newman
+      inputs:
+        script: 'sudo npm install -g newman'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - task: replacetokens@3
+      inputs:
+        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        targetFiles: '**/devEnv.postman_environment.json'
+        encoding: 'utf-8'
+        writeBOM: true
+        escapeType: 'json'
+        verbosity: 'detailed'
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+
+    - task: CmdLine@2
+      displayName: Run API Tests
+      inputs:
+        script: 'newman run shop-service-test.postman_collection.json -e devEnv.postman_environment.json --reporters cli,junit --reporter-junit-export Results/junitReport.xml'
+        workingDirectory: '$(Pipeline.Workspace)/manifests/'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '$(Pipeline.Workspace)/manifests/Results/junitReport.xml'
+        searchFolder: '$(Pipeline.Workspace)/manifests/'
+        testRunTitle: 'Integration Test'
+    
