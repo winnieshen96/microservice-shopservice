@@ -1,0 +1,16 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: service-account-rolebinding
+  namespace: dev
+  labels:
+    app: microservice-demo
+subjects:
+- kind: ServiceAccount
+  # fill in the name of the serviceAccount
+  name: 
+roleRef:
+  kind: Role
+  # fill in the name of the role
+  name:
+  apiGroup: ""

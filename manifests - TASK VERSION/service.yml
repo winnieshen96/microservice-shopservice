@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: shop-service
+  name: shop-service
+  namespace: dev
+spec:
+  type: LoadBalancer
+  selector:
+    # fill in the labels
+
+  ports:
+  - protocol: TCP
+    port: 7500
+    targetPort: http 

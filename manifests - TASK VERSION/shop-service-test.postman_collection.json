@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "662c9693-496c-48c8-a4c4-bc18625019a1",
+		"name": "shop-service-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "shop-inventory-integration-test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58da9457-66f4-4559-b2c0-a712ee9d3c30",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{externalIP}}/getShopDetails/fruitShop",
+					"host": [
+						"{{externalIP}}"
+					],
+					"path": [
+						"getShopDetails",
+						"fruitShop"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
